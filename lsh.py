@@ -57,5 +57,9 @@ class LSH(object):
 
     def lsh(self, col):
         minhashes = self.signature(col)
-        bands = [str(minhashes[i:i + self.r]) for i in xrange(0, len(minhashes), self.r)]
-        return [self.hasher(_, seed=self.band_seed) for _ in bands]
+        bands = [] 
+        for i in xrange(0, len(minhashes), self.r):
+            band = str(minhashes[i:i + self.r]) 
+            h = str(i) + '-' + str(self.hasher(band, seed=self.band_seed)) 
+            bands.append(h)
+        return bands
